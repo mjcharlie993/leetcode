@@ -14,8 +14,8 @@
  * the lowest bit. Than reset the highest bit to 1.
  ***************************************************************************************/
  
- class Solution {
- Public:
+class Solution {
+public:
     vector<int> plusOne(vector<int>& digits) {
         int len = digits.size();
         for (int i = len - 1; i >= 0; i--) {

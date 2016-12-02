@@ -1,6 +1,6 @@
 //Source : https://leetcode.com/articles/best-time-buy-and-sell-stock-ii/
 //Author : Mao Jiachen
-//Data   : 2016/11/30
+//Date   : 2016/11/30
 
 /***************************************************************************************
  *

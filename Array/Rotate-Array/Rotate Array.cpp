@@ -1,6 +1,6 @@
 //Source : https://leetcode.com/problems/rotate-array/
 //Author : Mao Jiachen
-//Data   : 2016/11/29
+//Date   : 2016/11/29
 
 /***************************************************************************************
  *

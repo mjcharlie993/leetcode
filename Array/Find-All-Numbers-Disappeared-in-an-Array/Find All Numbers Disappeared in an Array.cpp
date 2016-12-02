@@ -1,6 +1,6 @@
-//Source: https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
-//Author: Mao Jiachen
-//Data  : 2016/11/29
+//Source : https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+//Author : Mao Jiachen
+//Date   : 2016/11/29
 
 /***************************************************************************************
  *

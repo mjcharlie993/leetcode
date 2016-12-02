@@ -1,6 +1,6 @@
 //Source : https://leetcode.com/problems/product-of-array-except-self/
 //Author : Mao Jiachen
-//Data   : 2016/12/01
+//Date   : 2016/12/01
 
 /***************************************************************************************
  *

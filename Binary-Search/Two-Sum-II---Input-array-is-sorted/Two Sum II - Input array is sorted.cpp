@@ -1,6 +1,6 @@
 //Source : https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
 //Author : Mao Jiachen
-//Data   : 2016/12/01
+//Date   : 2016/12/01
 
 /****************************************************************************************
  *

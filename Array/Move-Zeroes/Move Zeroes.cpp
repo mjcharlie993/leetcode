@@ -1,6 +1,6 @@
 //Source : https://leetcode.com/problems/move-zeroes/
 //Author : Mao Jiachen
-//Data   : 2016/11/30
+//Date   : 2016/11/30
 
 /*****************************************************************************************
  *

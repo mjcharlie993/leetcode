@@ -2,7 +2,7 @@
 //Author : Mao Jiachen
 //Date   : 2016/12/12
 
-/***********************************************************************************************
+/************************************************************************************************
  *
  * Approach: Set Flag and Traversal vector
  * Algorithm: Set the rowflag and colflag of the first row and col. Then traversal the 

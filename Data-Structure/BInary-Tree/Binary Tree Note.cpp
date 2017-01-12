@@ -175,3 +175,66 @@ void printPostorder(struct node* node) {
     // then deal with the node
     std::cout << node->data << ' ';
 }
+
+/// hasPathSum()
+/*
+  Given a tree and a sum, return true if there is a path from the root
+  down to a leaf, such that adding up all the values along the path 
+  equals the given sum. 
+
+  Strategy subtract the node value from the sum when recurring down, 
+  and check to see if the sum is 0 when you run out of tree. 
+*/
+int hasPathSum(struct node* node, int sum) {
+    // return true if we run out of tree and sum == 0
+    if (node == nullptr) {
+        return sum == 0;
+    }
+    else {
+        // otherwise check both subtrees
+        int subSum = sum - node->data;
+        return hasPathSum(node->left, subSum) || hasPathSum(node->right, subSum);
+    }
+}
+
+/// printPaths()
+/*
+  Given a binary tree, print out all of its root-to-leaf
+  paths, one per line. Uses a recursive helper to do the work. 
+*/
+void printPaths(struct node* node) {
+    int path[1000];
+    printPathsRecur(node, path, 0);
+}
+/*
+  Recursive helper function -- given a node, and an array containing
+  the path from the root node up to but not including this node,
+  print out all the root-leaf paths. 
+*/
+void printPathsRecur(struct node* node, int path[], int pathLen) {
+    if (node == nullptr) 
+        return;
+    
+    // append this node to path array
+    path[pathLen] = node->data;
+    pathLen++;
+
+    // it's a leaf, so print the path that led to here
+    if (node->left == nullptr && node->right == nullptr) {
+        printArray(path, pathLen);
+    }
+    else {
+        // otherwise try both subtree
+        printPathsRecur(node->left, path, pathLen);
+        printPathsRecur(node->right, path, pathLen);
+    }
+}
+// Utility that prints out an array on a line. 
+void printArray(int ints[], int len) {
+    int i;
+    for (i = 0; i < len, i++) {
+        std::cout << ints[i] << ' ';
+    }
+    std::cout << std::endl;
+}
+ 

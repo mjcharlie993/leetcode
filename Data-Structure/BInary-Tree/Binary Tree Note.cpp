@@ -237,4 +237,166 @@ void printArray(int ints[], int len) {
     }
     std::cout << std::endl;
 }
- 
+
+/// mirror()
+/*
+  Change a tree so that the roles of the 
+  left and right pointers are swapped at every node. 
+
+  So the tree... 
+               4
+              / \
+             2   5
+            / \
+           1   3
+  is changed to... 
+               4
+              / \
+             5   2
+                / \ 
+               3   1
+*/
+void mirror(struct node* node) {
+    if (node == nullptr) {
+        return;
+    }
+    else {
+        struct node* temp;
+
+        // do the subtrees
+        mirror(node->left);
+        mirror(node->right);
+
+        // swap the pointers int this node
+        temp = node->left;
+        node->left = node->right;
+        node->right = temp;
+    }
+}
+
+/// doubleTree()
+/*
+  For each node in a binary search tree,
+  create a new duplicate node, and insert
+  the duplicate as the left child of the original node. 
+  The resulting tree should still be a binary search tree. 
+
+  So the tree... 
+      2
+     / \
+    1   3
+  is changed to... 
+      2
+     / \
+    2   3
+   /   /
+  1   3 
+ /
+1
+*/
+void doubleTree(struct node* node) {
+    struct node* oldLeft;
+    if (node == nullptr)
+        return;
+    
+    // do the subtrees
+    doubleTree(node->left);
+    doubleTree(node->right);
+
+    // duplicate this node to its left
+    oldLeft = node->left;
+    node->left = newNode(node->data);
+    node->left->left = oldLeft;
+}
+
+/// sameTree()
+/*
+  Given two trees, return true if they are
+  structurally identical. 
+*/
+int sameTree(struct node* a, struct node* b) {
+    // 1. both empty -> true
+    if (a == nullptr && b == nullptr)
+        return true;
+    
+    // 2. both non-empty -> compare them 
+    else if (a != nullptr && b != nullptr) {
+        return a->data == b->data &&
+               sameTree(a->left, b->left) &&
+               sameTree(a->right, b->right); 
+    }
+    // 3. one empty, one not -> false
+    else return false;
+}
+
+/// countTrees()
+/*
+  For the key values 1...numKeys, how many structurally uniquePaths
+  binary search tree are possible that store those keys. 
+
+  Strategy: consider that each value could be the root. 
+  Recursively find the size of the left and right subtrees.
+*/
+int countTree(int numKeys) {
+    if (numKeys <= 1) {
+        return 1;
+    }
+    else {
+        // there will be one value at the root, with whatever remains
+        // on the left and right each forming their own subtrees. 
+        // Iterate through all the values that could be the root... 
+        int sum = 0;
+        int left, right, root;
+        for (root = 1; root <= numKeys; root++) {
+            left = countTrees(root - 1);
+            right = countTrees(numKeys - root);
+
+            // number of possible trees with this root == left * right;
+            sum += left * right;
+        }
+        return sum;
+    }
+}
+
+/// isBST1()
+/* 
+  Return true if a binary tree is a binary search tree. 
+*/
+int isBST1(struct node* node) {
+    if (node == nullptr) 
+        return true;
+    // false if the max of the left is > than use
+
+    // (bug -- an earlier version had min/max backwards here)
+    if (node->right != nullptr && minValue(node->right) <= node->data)
+        return false;
+
+    // passing all that, it's a BST
+    return true;
+}
+
+/// isBST2()
+/*
+  Returns true if the given tree is a binary search tree
+  (efficient version)
+*/
+int isBST2(struct node* node) {
+    return isBSTUtil(node, INT_MIN, INT_MAX);
+}
+/*
+  Returns true if the given tree is a BST and its
+  values are >= min and <= max. 
+*/
+int isBSTUtil(struct node* node, int min, int max) {
+    if (node == nullptr) 
+        return true;
+    
+    // false if this node violates the min/max constraint
+    if (node->data < min || node->data > max)
+        return false;
+    
+    // otherwise check the subtrees recursively,
+    // tightening the min or max constraint
+    return isBSTUtil(node->left, min, node->data) &&
+           isBSTUtil(node->right, node->data + 1, max);
+}

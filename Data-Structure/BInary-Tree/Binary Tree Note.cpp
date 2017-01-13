@@ -274,7 +274,7 @@ void mirror(struct node* node) {
     }
 }
 
-/// doubleTree()
+/// doubleTree() but its solutin has a nullptr error!
 /*
   For each node in a binary search tree,
   create a new duplicate node, and insert

@@ -1,0 +1,9 @@
+Bit Manipulation
+
+~       位求反      
+<<      左移：在右侧插入值为0的二进制位
+>>      右移：1.无符号类型：在左侧插入0 2.带符号类型：在左侧插入符号位的副本或0
+&       位与：same one is one 
+^       位异或：only one is one, 
+|       位或：same zero is zero 
+

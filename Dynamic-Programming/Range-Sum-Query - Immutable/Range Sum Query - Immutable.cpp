@@ -4,7 +4,9 @@
 
 /********************************************************************
  *
- * ...
+ * Algorithm: The method is to save the addition of previous number to
+ * a new array, and use new array to solve the problem by later number 
+ * subtract pre number 
  * 
  *******************************************************************/
 

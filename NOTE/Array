@@ -1,0 +1,10 @@
+Array
+Start address is A, and have a continuous memory space.
+0 <= i < j < n, A[i] A[j] predecessor. A[j] A[i] successor.
+i >= 1, A[i - 1] A[i] immediate predecessor.
+i <= n - 2, A[i + 1] A[i] immediate successor.
+prefix suffix
+
+A[] == A. 
+A[i] == A + i * s. 
+linear array 

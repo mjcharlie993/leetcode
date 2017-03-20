@@ -26,7 +26,7 @@ template<typename T> struct BinNode {
 
     bool operator< (BinNode const& bn) { return data < bn.data; }
     bool operator== (BinNode const& bn) { return data == bn.data; }
-}
+};
 
 // BinNode状态与性质的判断
 #define IsRoot(x) (!((x).parent))

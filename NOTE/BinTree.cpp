@@ -120,3 +120,156 @@ BinTree<T>* BinTree<T>::secede(BinNodePosi(T) x)
 }
 
 // 就二叉树拓扑结构的变化范围而言，以上算法均只涉及局部的常数个节点。因此，除了更新祖先高度和释放节点等操作，只需常数时间
+
+// Recursion
+template<typename T, typename VST>
+void travPre_R(BinNodePosi(T) x, VST& visit) {
+	if (!x) return;
+	visit(x->data);
+	travPre_R(x->lc, visit);
+	travPre_R(x->rc, visit);
+}
+
+template<typename T, typename VST>
+void travPost_R(BinNodePosi(T) x, VST& visit) {
+	if (!x) return;
+	travPost_R(x->lc, visit);
+	travPost_R(x->rc, visit);
+	visit(x->data);
+}
+
+template<typename T, typename VST>
+void travIn_R(BinNodePosi(T) x, VST& visit) {
+	if (!x) return;
+	travIn_R(x->lc, visit);
+	visit(x->data);
+	travIn_R(x->rc, visit);
+}
+
+// Iteration
+// travPre_I1
+template<typename T, typename VST>
+void travPre_I1(BinNodePosi x, VST& visit) {
+	Stack<BinNodePosi(T)> S;
+	if (x) S.push(x);
+	while (!S.empty()) {
+		x = S.pop();
+		visit(x->data);
+		if (HasRChild(*x)) S.push(x->rc);
+		if (HasLChild(*x)) S.push(z->lc);
+	}
+}
+
+// 从当前节点出发，沿左分支不断深入，直至没有左分支的节点；沿途节点遇到后立即访问
+// travPre_I2
+template<typename T, typename VST>
+static void visitAlongLeftBranch(BinNodePosi(T) x, VST& visit, Stack<BinNodePosi(T)>& S) {
+	while (x) {
+		visit(x->data);
+		S.push(x->rc);
+		x = x->lc;
+	}
+}
+template<typename T, typename VST>
+void travPre_I2 (BinNodePosi(T) x, VST& visit) {
+	Stack<BinNodePosi(T)> S;
+	while (true) {
+		visitAlongLeftBranch(x, visit, S);
+		if (S.empty()) break;
+		x = S.pop();
+	}
+}
+
+// travIn_I1
+template<typename T>
+static void goAlongLeftBranch(BinNodePosi(T) x, Stack<BinNodePosi(T)& S) {
+	while (x) {
+		S.push(x);
+		x = x->lc;
+	}
+}
+template<typename T, typename VST>
+void travIn_I1 (BinNodePosi(T) x, VST& visit) {
+	Stack<BinNodePosi(T)> S;
+	while (true) {
+		goAlongLeftBranch(x, S);
+		if (S.empty()) break;
+		x = S.pop();
+		visit(x->data);
+		x = x->rc;
+	}
+}
+
+// travIn_I2
+template<typename T, typename VST> 
+void travIn_I2 (BinNodePosi(T) x, VST& visit) {
+	Stack<BinNodePosi(T)> S;
+	while (true) 
+		if (x) {
+			S.push(x);
+			x = x->lc;
+		} else if (!S.empty()) {
+			x = S.pop();
+			visit(x->data);
+			x = x->rc;
+		} else
+			break;
+}
+
+// travIn_I3
+template<typename T, typename VST>
+void travIn_I3 (BinNodePosi(T) x, VST& visit) {
+	bool backtrack = false;
+	while (true)
+		if (!backtrack && HasLChild(*x))
+			x = x->lc;
+		else {
+			visit(x->data);
+			if (HasRChild(*x)) {
+				x = x->rc;
+				backtrack = false;
+			} else {
+				if (!(x = x->succ())) break;
+				backtrack = true;
+			}
+		}
+}
+
+template<typename T>
+static void gotoHLVFL (Stack<BinNodePosi(T)>& S) {
+	while (BinNodePosi(T) x = S.top())
+		if (HasLChild(*x)) {
+			if (HasRCHild(*x)) 
+				S.push(x->rc);
+			S.push(x->lc);
+		} else 
+			S.push(x->rc);
+	S.pop();
+}
+template<typename T, typename VST>
+void travPost_I (BinNodePosi(T) x, VST& visit) {
+	Stack<BinNodePosi(T)> S;
+	if (x) S.push();
+	while (!S.empty()) {
+		if (S.top() != x->parent)
+			gotoHLVFL(S);
+		x = S.pop();
+		visit(x->data);
+	}
+}
+
+
+// 定位节点v的直接后继
+template<typename T> BinNodePosi(T) BinNode<T>::succ() {
+	BinNodePosi(T) s = this;	// 记录后继的临时变量
+	if (rc) {		// 若有右孩子，则直接后继必存在右子树中，具体地就是
+		s = rc;		// 右子树中
+		while (HasLChild(*s)) s = s->lc;	// 最靠左（最小）的节点
+	} else {	// 否则，直接后继应是“将当前节点包含于其左子树中的最低祖先”，具体地就是
+		while (IsRChild(*s)) s = s->parent; // 逆向地沿右向分支，不断朝左上方移动
+		s = s->parent;	// 最后再朝右上方移动一步，即抵达直接后继（如果存在）
+	}
+	return s;
+}
+
+// 

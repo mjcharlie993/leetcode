@@ -235,6 +235,7 @@ void travIn_I3 (BinNodePosi(T) x, VST& visit) {
 		}
 }
 
+// travPost_I
 template<typename T>
 static void gotoHLVFL (Stack<BinNodePosi(T)>& S) {
 	while (BinNodePosi(T) x = S.top())
@@ -272,4 +273,15 @@ template<typename T> BinNodePosi(T) BinNode<T>::succ() {
 	return s;
 }
 
-// 
+// travLevel
+template<typename T> template<typename VST>
+void BinNode<T>::travLevel(VST& visit) {
+	Queue<BinNodePosi(T)> Q;
+	Q.enqueue(this);
+	while (!Q.empty()) {
+		BinNodePosi(T) x = Q.dequeue();
+		visit(x->data);
+		if (HasLChild(*x)) Q.enqueue(x->lc);
+		if (HasRChild(*x)) Q.enqueue(x->rc);
+	}
+}

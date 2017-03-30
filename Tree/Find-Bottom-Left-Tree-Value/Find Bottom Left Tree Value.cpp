@@ -17,6 +17,7 @@
  * };
  */
 
+ // BFS
 class Solution {
 public:
     int findBottomLeftValue(TreeNode* root) {
@@ -34,5 +35,26 @@ public:
             }
         }
         return res;
+    }
+};
+
+ // DFS
+class Solution {
+public:
+    pair<int, int> res;
+    int findBottomLeftValue(TreeNode* root) {
+        res.first = 0;
+        res.second = root->val;
+        dfs(root, 0);
+        return res.second;
+    }
+    void dfs(TreeNode* root, int level) {
+        if (!root) return;
+        if (level > res.first) {
+            res.first = level;
+            res.second = root->val;
+        }
+        dfs(root->left, level + 1);
+        dfs(root->right, level + 1);
     }
 };

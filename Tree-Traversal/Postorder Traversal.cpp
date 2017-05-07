@@ -27,6 +27,7 @@ public:
         s.push(root);
         while (!s.empty()) {
             cur = s.top();
+            // 如果当前结点没有孩子结点 或者 孩子节点都已被访问过
             if ((cur->left == nullptr && cur->right == nullptr) || (pre != nullptr && (pre == cur->left || pre == cur->right))) {
                 res.push_back(cur->val);
                 s.pop();

@@ -1,13 +1,21 @@
-//Source : https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+//Source : https://leetcode.com/problems/binary-tree-inorder-traversal-ii/
 //Author : Mao Jiachen
-//Date   : 2017/03/27
+//Date   : 2017/05/08
 
 /********************************************************************
- * #1 34ms
- * #2 8ms
+ * #1 Iteration
  *******************************************************************/
 
- //#1
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
 class Solution {
 public:
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
@@ -29,25 +37,5 @@ public:
         }
         reverse(res.begin(), res.end());
         return res;
-    }
-};
-
- //#2
-class Solution {
-public:
-    void levelOrder(vector<vector<int>>& ans, TreeNode* node, int level) {
-        if (!node) return;
-        if (level >= ans.size())
-            ans.push_back({});
-        ans[level].push_back(node->val);
-        levelOrder(ans, node->left, level + 1);
-        levelOrder(ans, node->right, level + 1);
-    }
-
-    vector<vector<int>> levelOrderBottom(TreeNode* root) {
-        vector<vector<int>> ans;
-        levelOrder(ans, root, 0);
-        reverse(ans.begin(), ans.end());
-        return ans;
     }
 };
